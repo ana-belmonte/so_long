@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@@student.42.fr>         +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 19:40:33 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/15 20:27:45 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:38:10 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void floodfill(char **map, int x, int y)
 {
-	//printf("x = %d\n ", x);
-	//printf("y = %d\n ", y);
 	if(x >= (engine()->map.map_heigth)|| y >= engine()->map.map_width || map[x][y] == '1'
 		|| y <= 0 || x <= 0 || map[x][y] == 'V')
 		return ;
@@ -26,26 +24,22 @@ void floodfill(char **map, int x, int y)
 	floodfill(map, x, y - 1);
 }
 
-int checker_path()
+int checker_path(char *filename)
 {
 	char **newmap;
 	int i;
 
 	i = 0;
-	newmap = create_map_cpy(engine()->map.map_grid);
+	newmap = create_map_cpy(filename);
 	if(!newmap)
 		return(1);
 	floodfill(newmap, engine()->map.p_pos_x, engine()->map.p_pos_y);
-	// while(i < engine()->map.map_heigth)
-	// {
-	// 	printf("%s", newmap[i]);
-	//  	i++;
-	// }
 	if (data_caract(newmap))
 	{
 		free_cpy(newmap);
 		return(1);
 	}
+	free_cpy(newmap);
 	return (0);
 }
 
@@ -86,10 +80,8 @@ int checker_charact(char **map)
 	while(map[x])
 	{
 		y = 0;
-		//printf("x = %d\n ", x);
 		while(map[x][y])
 		{
-			//printf("y = %d\n ", y);
 			if(map[x][y] == 'C')
 				engine()->map.c_count++;
 			if(map[x][y] == 'P')
@@ -120,15 +112,12 @@ int checker_map_size(char **map)
 	while(map[0][y] != '\n')
 		y++;
 	engine()->map.map_width = y - 1;
-	//printf("y : %d\n", y);
-	//printf("width : %d\n", engine()->map.map_width);
 	x = 1;
 	while(map[x])
 	{
 		y = 0;
 		while(map[x][y]  && map[x][y] != '\n')
 			y++;
-		//printf("y : %d\n", y);
 		if((y - 1)!= engine()->map.map_width)
 			return(1);
 		x++;
@@ -147,8 +136,6 @@ int checker_walls(char **map)
 	x = 0;
 	width = engine()->map.map_width;
 	heigth = engine()->map.map_heigth;
-	//printf("width : %d\n", engine()->map.map_width);
-	//printf("heigth : %d\n", engine()->map.map_heigth);
 	while(map[x])
 	{
 		y = 0;
@@ -164,7 +151,7 @@ int checker_walls(char **map)
 	return(0);
 }
 
-int checker_map()
+int checker_map(char *filename)
 {	
 	if(checker_map_size(engine()->map.map_grid))
 		return(1);
@@ -172,7 +159,7 @@ int checker_map()
 		return(1);
 	if (checker_charact(engine()->map.map_grid))
 		return(1);
-	if(checker_path())
+	if(checker_path(filename))
 		return (1);
 	return(0);
 }

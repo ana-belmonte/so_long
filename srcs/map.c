@@ -3,29 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@@student.42.fr>         +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:23:51 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/15 16:07:06 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:38:36 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <so_long.h>
 
-char  **create_map_cpy(char **map)
+char  **create_map_cpy(char *filename)
 {
 	char **newmap;
 	int i;
+	int fd;
 
+	fd = open(filename, O_RDONLY);
+	if(fd < 0)
+		exit(exit_free("Couldn't open file\n"));
 	i = 0;
 	newmap = ft_calloc((engine()->map.map_heigth + 1), sizeof(char *));
 	if(!newmap)
 		return (NULL);
-	while (map[i])
+	while (i < engine()->map.map_heigth)
 	{
-		newmap[i] = map[i];
+		newmap[i] = get_next_line(fd);
 		i++;
 	}
+	newmap[i] = NULL;
+	close(fd);
 	return(newmap);
 }
 void pass_file_tomap(int fd, int heigth)
@@ -37,8 +43,6 @@ void pass_file_tomap(int fd, int heigth)
 	{
 		engine()->map.map_grid[i]= get_next_line(fd);
 		i++;
-		//printf("i: %d\n", i);
-		//printf("heigth : %d\n", heigth);
 	}
 	engine()->map.map_grid[i]= NULL;
 }
@@ -57,7 +61,6 @@ int create_map(char *filename, int fd)
 		if(line == NULL)
 			break ;
 		heigth++;
-		//printf("heigth : %d\n", heigth);
 		free(line);
 	}	
 	if(!line && heigth > 0)
@@ -73,17 +76,14 @@ int create_map(char *filename, int fd)
 void readfile(char *filename)
 {
 	int fd;
+	int i;
 
+	i = 0;
 	fd = open(filename, O_RDONLY);
 	if(fd < 0)
-		exit(exit_free("Couldn't open file"));
+		exit(exit_free("Couldn't open file\n"));
 	if(!create_map(filename, fd))
-		exit(exit_free("Couldn't create map"));
-	// while(i < game->map.map_heigth)
-	// {
-		// printf("%s", game->map.map_grid[i]);
-		// i++;
-	// }
-	if(checker_map())
-		exit(exit_free("invalid map"));
+		exit(exit_free("Couldn't create map\n"));
+	if(checker_map(filename))
+		exit(exit_free("invalid map\n"));
 }

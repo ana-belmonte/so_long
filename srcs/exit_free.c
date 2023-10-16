@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@@student.42.fr>         +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:15:12 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/15 15:41:19 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:42:16 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void free_cpy(char **newmap)
 	int i;
 
 	i = 0;
-	while(i < engine()->map.map_heigth)
+	while(newmap[i])
 	{
 		free(newmap[i]);
 		i++;
@@ -66,11 +66,12 @@ int exit_free(char *error)
 		if(game->map.textures. player != NULL)
 			clean_textures(&game->map.textures);
 	}
-	if(game->mlx_win && game->mlx_connect)
+	if(game->mlx_connect)
 	{
+		mlx_clear_window(game->mlx_connect, game->mlx_win);
 		mlx_destroy_window(game->mlx_connect, game->mlx_win);
 		mlx_destroy_display(game->mlx_connect);
-		free(game->mlx_connect);
+		free(engine()->mlx_connect);
 	}
 	return(1);
 }

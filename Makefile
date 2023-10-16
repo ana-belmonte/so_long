@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aaires-b <aaires-b@@student.42.fr>         +#+  +:+       +#+         #
+#    By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/12 12:51:00 by aaires-b          #+#    #+#              #
-#    Updated: 2023/10/15 16:10:07 by aaires-b         ###   ########.fr        #
+#    Updated: 2023/10/16 10:54:28 by aaires-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME = so_long
 
 SRCSFILES = main.c exit_free.c init.c map.c checkers.c get_next_line.c \
-			get_next_line_utils.c data_carct.c
+			get_next_line_utils.c data_carct.c events_hooks.c moves.c
 ##PARSFILES = checkers.c
 
 SRCSDIR	= srcs
@@ -24,7 +24,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 LIBFT = libft/libft.a
 LIBFTDIR = libft
-LIBFTFLAGS = -L ./libft -lft
+LIBFTFLAGS = -L ./libft/ -lft
 MLX = mlx_linux/libmlx_Linux.a
 MLXFLAGS = -L ./mlx_linux/ -lmlx -Ilmlx -lXext -lX11
 MLXDIR = mlx_linux
@@ -40,7 +40,7 @@ OBJS	= $(patsubst $(SRCSDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 all : $(NAME)
 
 $(NAME): $(MLX) $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(MLXFLAGS) $(LIBFTFLAGS) $(CFLAGS) $(INCLUDE) -o $(NAME)
+	$(CC) $(OBJS) $(LIBFTFLAGS) $(MLXFLAGS) $(CFLAGS) -o $(NAME)
 	
 $(OBJDIR)/%.o: $(SRCSDIR)/%.c | $(OBJDIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@

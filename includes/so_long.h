@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@@student.42.fr>         +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:38:57 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/15 20:56:39 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:29:27 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 #include <unistd.h>
 #include "mlx.h"
 #include <string.h>
-#include "libft.h"
+#include "../libft/libft.h"
 #include "get_next_line.h"
+#include <X11/Xlib.h>
+#include <X11/keysym.h>
 
 typedef struct s_texture
 {
@@ -29,6 +31,9 @@ typedef struct s_texture
 	void *exit;
 	void *enemies;
 	void *wall;
+	int width;
+	int heigth;
+	
 } t_texture;
 
 typedef struct s_map_data
@@ -59,7 +64,8 @@ typedef struct s_game
 void	readfile(char *filename);
 char	*get_next_line(int fd);
 int		create_map(char *filename, int fd);
-char  **create_map_cpy(char **map);
+char  **create_map_cpy();
+
 // ERROR HANDLING
 
 int	exit_free(char *error);
@@ -72,5 +78,18 @@ void free_cpy(char **newmap);
 
 t_game	*engine();
 void	init_variables(t_game *game);
+
+// EVENT HANDLING
+
+int escape(int keysym);
+int close_window(t_game *game);
+int move_handle(int keysym);
+
+// MOVES
+
+void move_left();
+void move_right();
+void move_up();
+void move_down();
 
 #endif
