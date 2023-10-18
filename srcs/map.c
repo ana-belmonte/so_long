@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:23:51 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/16 12:38:36 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:16:55 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char  **create_map_cpy(char *filename)
 	newmap = ft_calloc((engine()->map.map_heigth + 1), sizeof(char *));
 	if(!newmap)
 		return (NULL);
-	while (i < engine()->map.map_heigth)
+	while (i < (int)engine()->map.map_heigth)
 	{
 		newmap[i] = get_next_line(fd);
 		i++;
@@ -48,11 +48,11 @@ void pass_file_tomap(int fd, int heigth)
 }
 int create_map(char *filename, int fd)
 {
-	int heigth;
+	float heigth;
 	char *line;
 
 	line = get_next_line(fd);
-	heigth = 1;
+	heigth = 1.0;
 	free(line);
 	while(heigth > 0)
 	{

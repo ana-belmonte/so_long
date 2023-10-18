@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 19:40:33 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/16 12:38:10 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:14:39 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int checker_arg(char *arg)
 
 int checker_charact(char **map)
 {
-	int x;
-	int y;
+	float x;
+	float y;
 	int p_count;
 	int e_count;
 
@@ -105,20 +105,20 @@ int checker_charact(char **map)
 }
 int checker_map_size(char **map)
 {
-	int x;
-	int y;
+	float x;
+	float y;
 
 	y = 0;
 	while(map[0][y] != '\n')
 		y++;
-	engine()->map.map_width = y - 1;
+	engine()->map.map_width = y;
 	x = 1;
 	while(map[x])
 	{
 		y = 0;
 		while(map[x][y]  && map[x][y] != '\n')
 			y++;
-		if((y - 1)!= engine()->map.map_width)
+		if((y) != engine()->map.map_width)
 			return(1);
 		x++;
 	}
@@ -128,10 +128,10 @@ int checker_map_size(char **map)
 
 int checker_walls(char **map)
 {
-	int x;
-	int y;
-	int width;
-	int heigth;
+	float x;
+	float y;
+	float width;
+	float heigth;
 
 	x = 0;
 	width = engine()->map.map_width;
@@ -142,7 +142,7 @@ int checker_walls(char **map)
 		while(map[x][y] && map[x][y] != '\n')
 		{
 			if(map[0][y] != '1' || map[x][0] != '1' || map[heigth - 1][y] != '1'
-				|| map[x][width] != '1')
+				|| map[x][width - 1] != '1')
 				return(1);
 			y++;
 		}

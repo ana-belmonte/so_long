@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:15:12 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/16 12:42:16 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:09:25 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,14 @@ void	clean_map_grid(char **map_grid)
 	free(map_grid);
 }
 
-void clean_image(void *image)
+void clean_image(t_image *img)
 {
-	mlx_destroy_image(engine()->mlx_connect, image);
-	free(image);
+	free(img.address);
+	free(img.bpp);
+	free(img.endian);
+	free(img.line_length);
+	mlx_destroy_image(engine()->mlx_connect, img.img);
+	free(img);
 }
 
 void clean_textures(t_texture *textures)
@@ -49,7 +53,7 @@ void clean_textures(t_texture *textures)
 	clean_image(textures->player);
 	clean_image(textures->collect);
 	clean_image(textures->exit);
-	clean_image(textures->enemies);
+	clean_image(textures->floor);
 	clean_image(textures->wall);
 }
 
@@ -63,7 +67,7 @@ int exit_free(char *error)
 	if(game->map.map_grid)
 	{
 		clean_map_grid(game->map.map_grid);
-		if(game->map.textures. player != NULL)
+		if(game->map.textures.player != NULL)
 			clean_textures(&game->map.textures);
 	}
 	if(game->mlx_connect)

@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:38:57 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/16 12:29:27 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:20:03 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,34 @@
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 
+
+typedef struct s_image
+{
+	void *img;
+	char *address;
+	int endian;
+	int bpp;
+	int line_length;
+	
+} t_image;
+
 typedef struct s_texture
 {
-	void *player;
-	void *collect;
-	void *exit;
-	void *enemies;
-	void *wall;
-	int width;
-	int heigth;
-	
+	t_image player;
+	t_image collect;
+	t_image exit;
+	t_image floor;
+	t_image wall;
 } t_texture;
 
 typedef struct s_map_data
 {
 	char **map_grid;
-	int map_heigth;
-	int map_width;
-	int c_count;
-	int p_pos_x;
-	int p_pos_y;
+	float map_heigth;
+	float map_width;
+	int	c_count;
+	float p_pos_x;
+	float p_pos_y;
 	t_texture textures;
 } t_map_data;
 
@@ -52,9 +60,7 @@ typedef struct s_game
 	t_map_data map;
 	void *mlx_connect;
 	void *mlx_win;
-	int win_heigth;
-	int win_width;
-	long int n_moves;
+	int n_moves;
 
 } t_game;
 
@@ -65,6 +71,7 @@ void	readfile(char *filename);
 char	*get_next_line(int fd);
 int		create_map(char *filename, int fd);
 char  **create_map_cpy();
+void render_map();
 
 // ERROR HANDLING
 
@@ -84,6 +91,7 @@ void	init_variables(t_game *game);
 int escape(int keysym);
 int close_window(t_game *game);
 int move_handle(int keysym);
+void set_image();
 
 // MOVES
 

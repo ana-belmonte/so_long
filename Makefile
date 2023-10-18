@@ -6,7 +6,7 @@
 #    By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/12 12:51:00 by aaires-b          #+#    #+#              #
-#    Updated: 2023/10/16 10:54:28 by aaires-b         ###   ########.fr        #
+#    Updated: 2023/10/18 13:17:50 by aaires-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@
 NAME = so_long
 
 SRCSFILES = main.c exit_free.c init.c map.c checkers.c get_next_line.c \
-			get_next_line_utils.c data_carct.c events_hooks.c moves.c
+			get_next_line_utils.c data_carct.c events_hooks.c moves.c \
+			set_images.c rendering.c
 ##PARSFILES = checkers.c
 
 SRCSDIR	= srcs
