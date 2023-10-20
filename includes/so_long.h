@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:38:57 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/18 17:20:03 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:30:05 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,34 @@
 
 typedef struct s_image
 {
-	void *img;
+	void *img
 	char *address;
 	int endian;
 	int bpp;
 	int line_length;
+	int width;
+	int height;
 	
 } t_image;
 
 typedef struct s_texture
 {
 	t_image player;
-	t_image collect;
+	t_image collect[5];
 	t_image exit;
 	t_image floor;
 	t_image wall;
+	t_image enemies;
 } t_texture;
 
 typedef struct s_map_data
 {
 	char **map_grid;
-	float map_heigth;
-	float map_width;
+	int  map_heigth;
+	int map_width;
 	int	c_count;
-	float p_pos_x;
-	float p_pos_y;
+	int p_pos_x;
+	int p_pos_y;
 	t_texture textures;
 } t_map_data;
 
@@ -61,6 +64,7 @@ typedef struct s_game
 	void *mlx_connect;
 	void *mlx_win;
 	int n_moves;
+	t_image win_image;
 
 } t_game;
 
@@ -71,7 +75,8 @@ void	readfile(char *filename);
 char	*get_next_line(int fd);
 int		create_map(char *filename, int fd);
 char  **create_map_cpy();
-void render_map();
+void set_new_image();
+void cpy_to_win_image(t_image *base, t_image old, int x, int y);
 
 // ERROR HANDLING
 
@@ -85,6 +90,7 @@ void free_cpy(char **newmap);
 
 t_game	*engine();
 void	init_variables(t_game *game);
+void init_image(t_image *image);
 
 // EVENT HANDLING
 
@@ -92,6 +98,9 @@ int escape(int keysym);
 int close_window(t_game *game);
 int move_handle(int keysym);
 void set_image();
+t_image new_file_image(char *path);
+int get_pixel_color(t_image *old, int x, int y);
+void cpy_pixel(t_image *base, int x, int y, unsigned int color);
 
 // MOVES
 

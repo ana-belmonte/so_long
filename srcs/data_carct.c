@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:44:18 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/18 17:17:33 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/19 11:06:40 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int data_caract(char **newmap)
 {
-	float x;
-	float y;
+	int x;
+	int y;
 
 	x = 0;
 	while(newmap[x])

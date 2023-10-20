@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 19:40:33 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/18 17:14:39 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/19 11:06:19 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int checker_arg(char *arg)
 
 int checker_charact(char **map)
 {
-	float x;
-	float y;
+	int x;
+	int  y;
 	int p_count;
 	int e_count;
 
@@ -105,8 +105,8 @@ int checker_charact(char **map)
 }
 int checker_map_size(char **map)
 {
-	float x;
-	float y;
+	int x;
+	int y;
 
 	y = 0;
 	while(map[0][y] != '\n')
@@ -128,10 +128,10 @@ int checker_map_size(char **map)
 
 int checker_walls(char **map)
 {
-	float x;
-	float y;
-	float width;
-	float heigth;
+	int x;
+	int y;
+	int width;
+	int heigth;
 
 	x = 0;
 	width = engine()->map.map_width;
