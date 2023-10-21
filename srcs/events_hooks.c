@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 20:54:07 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/17 15:54:32 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:18:25 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,25 @@ int close_window(t_game *game)
 int move_handle(int keysym)
 {
 	if(keysym  == 97 || keysym == 65361)
-		move_left();
+		engine()->map.player.dir_x = -1;
 	if(keysym  == 119 || keysym  == 65362)
-		move_up();
+		engine()->map.player.dir_y = -1;
 	if(keysym  == 100 || keysym  == 65363)
-		move_right();
+		engine()->map.player.dir_x = 1;
 	if(keysym  == 115 || keysym  == 65364)
-		move_down();
+		engine()->map.player.dir_y = 1;
+	return (0);
+}
+
+int reset_handle(int keysym)
+{
+	if(keysym  == 97 || keysym == 65361)
+		engine()->map.player.dir_x = 0;
+	if(keysym  == 119 || keysym  == 65362)
+		engine()->map.player.dir_y = 0;
+	if(keysym  == 100 || keysym  == 65363)
+		engine()->map.player.dir_x = 0;
+	if(keysym  == 115 || keysym  == 65364)
+		engine()->map.player.dir_y = 0;
 	return (0);
 }

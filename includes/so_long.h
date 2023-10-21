@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:38:57 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/19 18:30:05 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:11:53 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include "get_next_line.h"
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
-
+#include <sys/time.h>
 
 typedef struct s_image
 {
@@ -37,15 +37,30 @@ typedef struct s_image
 	
 } t_image;
 
-typedef struct s_texture
+typedef struct s_player
 {
-	t_image player;
-	t_image collect[5];
-	t_image exit;
-	t_image floor;
+	int dir_x;
+	int dir_y;
+	float pos_x;
+	float pos_y;
+	float velocity;
+	t_image sprite[4];
+} t_player;
+
+
+typedef struct s_coin
+{
+	float pos_x;
+	float pos_y;
+	float velocity;
+	t_image sprite[4];
+} t_coin;
+
+typedef struct textures
+{
 	t_image wall;
-	t_image enemies;
-} t_texture;
+	t_image exit;
+} textures;
 
 typedef struct s_map_data
 {
@@ -53,9 +68,9 @@ typedef struct s_map_data
 	int  map_heigth;
 	int map_width;
 	int	c_count;
-	int p_pos_x;
-	int p_pos_y;
-	t_texture textures;
+	t_player player;
+	t_coin *coin;
+	t_textures textures;
 } t_map_data;
 
 typedef struct s_game
@@ -65,7 +80,7 @@ typedef struct s_game
 	void *mlx_win;
 	int n_moves;
 	t_image win_image;
-
+	float delta_time;
 } t_game;
 
 

@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 05:39:22 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/19 20:04:24 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:25:53 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,8 @@
 void set_image()
 {
  	engine()->map.textures.wall = new_file_image("images/floor.xpm");
-	engine()->map.textures.floor = new_file_image("images/floor2.xpm");
 	if(!engine()->map.textures.wall.img || !engine()->map.textures.floor.img)
 		exit(exit_free("problem creating image"));
-	// mlx_put_image_to_window(engine()->mlx_connect, engine()->mlx_win, engine()->map.textures.wall.img, 0, 0);
-	// mlx_put_image_to_window(engine()->mlx_connect, engine()->mlx_win, engine()->map.textures.floor.img, 64*2, 64*2);
-	cpy_to_win_image(&engine()->win_image, engine()->map.textures.wall, 0, 0);
-	// cpy_to_win_image(&engine()->win_image, engine()->map.textures.floor, 10, 100);
 }
 
 t_image new_file_image(char *path)
@@ -41,9 +36,6 @@ void cpy_to_win_image(t_image *base, t_image old, int x, int y)
 	int j;
 	
 	i = 0;
-	printf("Width: %d\n", old.width);
-	printf("Height: %d\n", old.height);
-
 	while(i < old.width)
 	{
 		j = 0;
