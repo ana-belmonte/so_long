@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_carct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:44:18 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/19 11:06:40 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:32:28 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ int data_caract(char **newmap)
 	int x;
 	int y;
 
-	x = 0;
-	while(newmap[x])
+	y = 0;
+	while(newmap[y])
 	{
-		y = 0;
-		while(newmap[x][y])
+		x = 0;
+		while(newmap[y][x])
 		{
-			if(newmap[x][y] == 'E' || newmap[x][y] == 'C')
+			if(newmap[y][x] == 'E' || newmap[y][x] == 'C')
 				return(1);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 	return(0);
 }

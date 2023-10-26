@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:15:12 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/19 10:58:27 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:19:12 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ void clean_image(t_image img)
 	mlx_destroy_image(engine()->mlx_connect, img.img);
 }
 
-void clean_textures(t_texture *textures)
+void clean_textures(textures *textures)
 {
-	clean_image(textures->player);
-	clean_image(textures->collect);
+	//clean_image(textures->player);
+	//clean_image(textures->collect);
 	clean_image(textures->exit);
-	clean_image(textures->floor);
+	//clean_image(textures->floor);
 	clean_image(textures->wall);
 }
 
@@ -63,7 +63,7 @@ int exit_free(char *error)
 	if(game->map.map_grid)
 	{
 		clean_map_grid(game->map.map_grid);
-		if(game->map.textures.player.img != NULL)
+		if(game->map.textures.wall.img != NULL)
 			clean_textures(&game->map.textures);
 	}
 	if(game->mlx_connect)

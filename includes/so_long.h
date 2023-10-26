@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:38:57 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/21 20:11:53 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:23:25 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 typedef struct s_image
 {
-	void *img
+	void *img;
 	char *address;
 	int endian;
 	int bpp;
@@ -69,8 +69,8 @@ typedef struct s_map_data
 	int map_width;
 	int	c_count;
 	t_player player;
-	t_coin *coin;
-	t_textures textures;
+	t_coin coin;
+	textures textures;
 } t_map_data;
 
 typedef struct s_game
@@ -81,6 +81,7 @@ typedef struct s_game
 	int n_moves;
 	t_image win_image;
 	float delta_time;
+	float velocidade;
 } t_game;
 
 
@@ -91,7 +92,7 @@ char	*get_next_line(int fd);
 int		create_map(char *filename, int fd);
 char  **create_map_cpy();
 void set_new_image();
-void cpy_to_win_image(t_image *base, t_image old, int x, int y);
+void cpy_to_win_image(t_image *base, t_image *old, int x, int y);
 
 // ERROR HANDLING
 
@@ -112,10 +113,11 @@ void init_image(t_image *image);
 int escape(int keysym);
 int close_window(t_game *game);
 int move_handle(int keysym);
-void set_image();
+void set_images();
 t_image new_file_image(char *path);
 int get_pixel_color(t_image *old, int x, int y);
 void cpy_pixel(t_image *base, int x, int y, unsigned int color);
+int reset_handle(int keysym);
 
 // MOVES
 

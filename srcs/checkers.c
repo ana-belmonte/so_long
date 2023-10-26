@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 19:40:33 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/19 11:06:19 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:31:44 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void floodfill(char **map, int x, int y)
 {
-	if(x >= (engine()->map.map_heigth)|| y >= engine()->map.map_width || map[x][y] == '1'
-		|| y <= 0 || x <= 0 || map[x][y] == 'V')
+	if(x >= (engine()->map.map_width)|| y >= engine()->map.map_heigth || map[y][x] == '1'
+		|| y <= 0 || x <= 0 || map[y][x] == 'V')
 		return ;
-	map[x][y] = 'V';
+	map[y][x] = 'V';
 	floodfill(map, x + 1, y);
 	floodfill(map, x - 1, y);
 	floodfill(map, x, y + 1);
@@ -27,13 +27,11 @@ void floodfill(char **map, int x, int y)
 int checker_path(char *filename)
 {
 	char **newmap;
-	int i;
 
-	i = 0;
 	newmap = create_map_cpy(filename);
 	if(!newmap)
 		return(1);
-	floodfill(newmap, engine()->map.p_pos_x, engine()->map.p_pos_y);
+	floodfill(newmap, engine()->map.player.pos_x, engine()->map.player.pos_y);
 	if (data_caract(newmap))
 	{
 		free_cpy(newmap);
@@ -76,28 +74,28 @@ int checker_charact(char **map)
 
 	e_count = 0;
 	p_count = 0;
-	x = 0;
-	while(map[x])
+	y = 0;
+	while(map[y])
 	{
-		y = 0;
-		while(map[x][y])
+		x = 0;
+		while(map[y][x])
 		{
-			if(map[x][y] == 'C')
+			if(map[y][x] == 'C')
 				engine()->map.c_count++;
-			if(map[x][y] == 'P')
+			if(map[y][x] == 'P')
 			{
 				p_count++;
-				engine()->map.p_pos_x = x;
-				engine()->map.p_pos_y = y;
+				engine()->map.player.pos_x = x;
+				engine()->map.player.pos_y = y;
 			}
-			if(map[x][y] == 'E')
+			if(map[y][x] == 'E')
 				e_count++;
-			if (map[x][y] != '1' && map[x][y] != 'C' && map[x][y] != 'P' 
-				&& map[x][y] != 'E' && map[x][y] != '0' && map[x][y] != '\n')
+			if (map[y][x] != '1' && map[y][x] != 'C' && map[y][x] != 'P' 
+				&& map[y][x] != 'E' && map[y][x] != '0' && map[y][x] != '\n')
 					return (1);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 	if(engine()->map.c_count < 1 || (e_count + p_count) != 2)
 		return (1);
@@ -108,19 +106,19 @@ int checker_map_size(char **map)
 	int x;
 	int y;
 
-	y = 0;
-	while(map[0][y] != '\n')
+	x = 0;
+	while(map[0][x] != '\n')
 		y++;
-	engine()->map.map_width = y;
-	x = 1;
-	while(map[x])
+	engine()->map.map_width = x;
+	y = 1;
+	while(map[y])
 	{
-		y = 0;
-		while(map[x][y]  && map[x][y] != '\n')
-			y++;
-		if((y) != engine()->map.map_width)
+		x = 0;
+		while(map[y][x]  && map[y][x] != '\n')
+			x++;
+		if((x) != engine()->map.map_width)
 			return(1);
-		x++;
+		y++;
 	}
 	return(0);
 }
@@ -133,20 +131,20 @@ int checker_walls(char **map)
 	int width;
 	int heigth;
 
-	x = 0;
+	y = 0;
 	width = engine()->map.map_width;
 	heigth = engine()->map.map_heigth;
-	while(map[x])
+	while(map[y])
 	{
-		y = 0;
-		while(map[x][y] && map[x][y] != '\n')
+		x = 0;
+		while(map[y][x] && map[y][x] != '\n')
 		{
-			if(map[0][y] != '1' || map[x][0] != '1' || map[heigth - 1][y] != '1'
-				|| map[x][width - 1] != '1')
+			if(map[0][x] != '1' || map[y][0] != '1' || map[heigth - 1][x] != '1'
+				|| map[y][width - 1] != '1')
 				return(1);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 	return(0);
 }

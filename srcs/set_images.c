@@ -3,20 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   set_images.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 05:39:22 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/21 20:25:53 by aaires-b         ###   ########.fr       */
+/*   Created: 2023/10/26 12:58:41 by aaires-b          #+#    #+#             */
+/*   Updated: 2023/10/26 16:46:00 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <so_long.h>
 
-void set_image()
+void set_images()
 {
- 	engine()->map.textures.wall = new_file_image("images/floor.xpm");
-	if(!engine()->map.textures.wall.img || !engine()->map.textures.floor.img)
+ 	engine()->map.textures.wall = new_file_image("images/wall.xpm");
+	if(!engine()->map.textures.wall.img )
 		exit(exit_free("problem creating image"));
+	engine()->map.textures.exit = new_file_image("images/exit.xpm");
+	if(!engine()->map.textures.exit.img )
+		exit(exit_free("problem creating image"));
+	// engine()->map.player.sprite[0] = new_file_image("images/front1.xpm");
+	// if(!engine()->map.player.sprite[0].img)
+	// 	exit(exit_free("problem creating image"));
+	// engine()->map.player.sprite[1] = new_file_image("images/left1.xpm");
+	// if(!engine()->map.player.sprite[1].img)
+	// 	exit(exit_free("problem creating image"));
+	// engine()->map.player.sprite[2] = new_file_image("images/rigth1.xpm");
+	// if(!engine()->map.player.sprite[2].img)
+	// 	exit(exit_free("problem creating image"));
+	// //engine()->map.player.sprite[3] = new_file_image("images/back1.xpm");
+	// if(!engine()->map.player.sprite[3].img)
+	// 	exit(exit_free("problem creating image"));
+	
 }
 
 t_image new_file_image(char *path)
@@ -30,23 +46,23 @@ t_image new_file_image(char *path)
 	return(image);
 }
 
-void cpy_to_win_image(t_image *base, t_image old, int x, int y)
+void cpy_to_win_image(t_image *base, t_image *old, int sx, int sy)
 {
-	int i;
-	int j;
+	int y;
+	int x;
 	
-	i = 0;
-	while(i < old.width)
+	x = 0;
+	while(x < old->width)
 	{
-		j = 0;
-		while(j < old.height)
+		y = 0;
+		while(y < old->height)
 		{
-			cpy_pixel(base, x + i, y + j, get_pixel_color(&old, i, j));
-			j++;
+			cpy_pixel(base, x + sx, y + sy, get_pixel_color(old, x, y));
+			y++;
 		}
-		i++;
+		x++;
 	}
-	mlx_put_image_to_window(engine()->mlx_connect, engine()->mlx_win, base->img, 0, 0);	
+	//mlx_put_image_to_window(engine()->mlx_connect, engine()->mlx_win, base->img, 0, 0);	
 }
 
 void cpy_pixel(t_image *base, int x, int y, unsigned int color)
