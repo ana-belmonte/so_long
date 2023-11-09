@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:27:45 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/26 17:37:45 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:56:08 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,17 @@ t_game *engine()
 
 void update_player_pos()
 {
-	engine()->map.player.pos_x += engine()->delta_time * engine()->map.player.dir_x * engine()->velocidade;
-	engine()->map.player.pos_y += engine()->delta_time * engine()->map.player.dir_y * engine()->velocidade;
+	float new_x;
+	float new_y;
+	
+	new_x = engine()->map.player.pos_x + (engine()->delta_time * engine()->map.player.dir_x * engine()->velocidade);
+	new_y = engine()->map.player.pos_y + (engine()->delta_time * engine()->map.player.dir_y * engine()->velocidade);
+	if(!check_wall_collision(engine()->map, new_x, new_y) && !check_wall_collision(engine()->map, new_x + 0.50, new_y + 0.50) &&
+		!check_wall_collision(engine()->map, new_x, new_y + 0.50) && !check_wall_collision(engine()->map, new_x + 0.50, new_y))
+	{
+		engine()->map.player.pos_x = new_x;
+		engine()->map.player.pos_y = new_y;
+	}
 }	
 
 void update_delta_time() // deltatime = time that passed between two events, in animation keeps everything flow well by controling the time and velocity between them 
@@ -35,17 +44,18 @@ void update_delta_time() // deltatime = time that passed between two events, in 
 	last_time = current_time; // reset the time
 }
 
-// void render_player()
-// {
-// 	print_image(32 * player_x, 64 * player_y);
-// }
-
 int update()
 {
 	update_delta_time();
-	//update_player_pos();
-	//render_map();
-	//render_player()
+	update_player_pos();
+	enemie_collision();
+	render_map();
+	render_exit();
+	render_player();
+	render_enemies();
+	render_coin();
+	collect_coin();
+	endgame();
 	return(0);
 }
 
@@ -74,17 +84,17 @@ int main(int ac, char **av)
 		return(exit_free("invalid args\n"));
 	init_variables(engine());
 	readfile(av[1]);
+	engine()->map.coins = create_coins();
+	engine()->map.enemies = create_enemies();
 	init_window();
 	create_new_img();
 	set_images();
-	set_new_image();
-	mlx_put_image_to_window(engine()->mlx_connect, engine()->mlx_win, engine()->win_image.img, 0, 0);	
+	engine()->map.player.curr_frame = engine()->map.player.standing[0];
+	mlx_loop_hook(engine()->mlx_connect, update, NULL);
 	mlx_hook(engine()->mlx_win, 02, 1L<<0, move_handle, NULL);
-	//mlx_hook(engine()->mlx_win, 03, 1L<<1, reset_handle, NULL);
+	mlx_hook(engine()->mlx_win, 03, 1L<<1, reset_handle, NULL);
 	mlx_hook(engine()->mlx_win, 17, 1L<<2, close_window, NULL);
-	//mlx_loop_hook(engine()->mlx_connect, update, NULL);
-	mlx_key_hook(engine()->mlx_win, escape, engine());
-	mlx_loop(engine()->mlx_connect);
+	mlx_loop(engine()->mlx_connect);	
 }
 
 	// while(i <= engine()->map.map_heigth)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 19:40:33 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/26 17:31:44 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:34:50 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,16 @@ int checker_charact(char **map)
 			}
 			if(map[y][x] == 'E')
 				e_count++;
+			if(map[y][x] == 'M')
+				engine()->map.monster_c++;
 			if (map[y][x] != '1' && map[y][x] != 'C' && map[y][x] != 'P' 
-				&& map[y][x] != 'E' && map[y][x] != '0' && map[y][x] != '\n')
+				&& map[y][x] != 'E' && map[y][x] != '0'  && map[y][x] != 'M' && map[y][x] != '\n')
 					return (1);
 			x++;
 		}
 		y++;
 	}
+	engine()->map.total_c_count = engine()->map.c_count;
 	if(engine()->map.c_count < 1 || (e_count + p_count) != 2)
 		return (1);
 	return (0);
@@ -108,7 +111,7 @@ int checker_map_size(char **map)
 
 	x = 0;
 	while(map[0][x] != '\n')
-		y++;
+		x++;
 	engine()->map.map_width = x;
 	y = 1;
 	while(map[y])

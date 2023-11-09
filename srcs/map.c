@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:23:51 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/10/26 17:35:53 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/27 11:53:38 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,25 @@ int create_map(char *filename, int fd)
 	return(1);
 }
 
+
+void set_to_zero()
+{
+	int x;
+	int y;
+
+	y = 0;
+	while(y < engine()->map.map_heigth)
+	{
+		x = 0;
+		while(x < engine()->map.map_width)
+		{
+			if(engine()->map.map_grid[y][x] == 'P')
+				engine()->map.map_grid[y][x] = '0';
+			x++;
+		}
+		y++;
+	}
+}
 void readfile(char *filename)
 {
 	int fd;
@@ -84,4 +103,5 @@ void readfile(char *filename)
 		exit(exit_free("Couldn't create map\n"));
 	if(checker_map(filename))
 		exit(exit_free("invalid map\n"));
+	set_to_zero();
 }
