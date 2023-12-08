@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:27:45 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/11/09 14:56:08 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:31:25 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,46 @@ t_game *engine()
 	return (&game);
 }
 
+void update_enemie_pos()
+{
+	int dir;
+	int i;
+	double time_interval;
+	static struct timeval last_time;
+	double time_passed;
+	struct timeval current_time;
+
+	if(last_time.tv_sec == 0)
+		gettimeofday(&last_time, NULL);
+	gettimeofday(&current_time, NULL);
+	time_interval = 0.5;
+	time_passed = (current_time.tv_sec - last_time.tv_sec) + (current_time.tv_usec - last_time.tv_usec) / 1000000.0;
+	printf("last sec: %ld\n",last_time.tv_sec);
+	printf("curr usec: %ld \n",current_time.tv_usec);
+	printf("curr sec :%ld\n",current_time.tv_sec);
+	printf("last usec :%ld \n",last_time.tv_usec);
+	i = 0;
+	printf("time passed :%f\n", time_passed);
+	if(time_passed >= time_interval)
+	{
+		while(i < engine()->map.monster_c)
+		{
+			dir = (rand() % 4);
+			if(dir == 0 && !check_wall_collision(engine()->map, engine()->map.enemies[i].pos_x, engine()->map.enemies[i].pos_y - 1))
+				engine()->map.enemies[i].pos_y -= 1;
+			if(dir == 1 && !check_wall_collision(engine()->map, engine()->map.enemies[i].pos_x, engine()->map.enemies[i].pos_y + 1))
+				engine()->map.enemies[i].pos_y += 1;
+			if(dir == 2 && !check_wall_collision(engine()->map, engine()->map.enemies[i].pos_x - 1, engine()->map.enemies[i].pos_y))
+				engine()->map.enemies[i].pos_x -= 1;
+			if(dir == 3 && !check_wall_collision(engine()->map, engine()->map.enemies[i].pos_x + 1, engine()->map.enemies[i].pos_y))
+				engine()->map.enemies[i].pos_x += 1;
+			i++;
+		}
+		last_time = current_time;
+	}
+	
+}
+
 void update_player_pos()
 {
 	float new_x;
@@ -26,8 +66,8 @@ void update_player_pos()
 	
 	new_x = engine()->map.player.pos_x + (engine()->delta_time * engine()->map.player.dir_x * engine()->velocidade);
 	new_y = engine()->map.player.pos_y + (engine()->delta_time * engine()->map.player.dir_y * engine()->velocidade);
-	if(!check_wall_collision(engine()->map, new_x, new_y) && !check_wall_collision(engine()->map, new_x + 0.50, new_y + 0.50) &&
-		!check_wall_collision(engine()->map, new_x, new_y + 0.50) && !check_wall_collision(engine()->map, new_x + 0.50, new_y))
+	if(!check_wall_collision(engine()->map, new_x, new_y) && !check_wall_collision(engine()->map, new_x + 0.40, new_y + 0.50) &&
+		!check_wall_collision(engine()->map, new_x, new_y + 0.50) && !check_wall_collision(engine()->map, new_x + 0.40, new_y))
 	{
 		engine()->map.player.pos_x = new_x;
 		engine()->map.player.pos_y = new_y;
@@ -48,6 +88,7 @@ int update()
 {
 	update_delta_time();
 	update_player_pos();
+	update_enemie_pos();
 	enemie_collision();
 	render_map();
 	render_exit();
@@ -84,6 +125,7 @@ int main(int ac, char **av)
 		return(exit_free("invalid args\n"));
 	init_variables(engine());
 	readfile(av[1]);
+	srand(time(NULL));
 	engine()->map.coins = create_coins();
 	engine()->map.enemies = create_enemies();
 	init_window();

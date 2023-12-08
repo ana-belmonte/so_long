@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:38:57 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/11/09 14:55:40 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:35:32 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 #include <sys/time.h>
+#include <time.h>
 
 typedef struct s_image
 {
