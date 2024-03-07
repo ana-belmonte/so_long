@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@@student.42.fr>         +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 15:05:39 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/09/16 20:13:30 by aaires-b         ###   ########.fr       */
+/*   Updated: 2024/03/07 17:35:33 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ char	*ft_create(char *s1, char *s2);
 int		ft_linesize(char *s);
 char	*get_next_line(int fd);
 void	cleanbuffer(char *buffer, int *flag);
-void	free_all(char *str);
 
 #endif

@@ -1,21 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   endgame.c                                          :+:      :+:    :+:   */
+/*   set_images3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 14:08:51 by aaires-b          #+#    #+#             */
-/*   Updated: 2024/03/06 18:11:43 by aaires-b         ###   ########.fr       */
+/*   Created: 2024/03/07 16:42:30 by aaires-b          #+#    #+#             */
+/*   Updated: 2024/03/07 18:39:36 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <so_long.h>
 
-void	endgame(void)
+void	set_sprite_enemies(void)
 {
-	if (engine()->map.c_count == 0 && 
-		(int)engine()->map.player.pos_x == engine()->map.e_pos_x 
-		&& (int)engine()->map.player.pos_y == engine()->map.e_pos_y)
-		exit(exit_free("YOU WON <3\n"));
+	int	i;
+
+	i = 0;
+	while (i < engine()->map.monster_c)
+	{
+		set_enemies(i);
+		i++;
+	}
+}
+
+void	set_sprite_coins(void)
+{
+	int	i;
+
+	i = 0;
+	while (i < engine()->map.c_count)
+	{
+		set_coins(i);
+		i++;
+	}
 }

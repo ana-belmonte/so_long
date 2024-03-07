@@ -3,44 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   coins.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 15:55:38 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/11/06 22:23:34 by aaires-b         ###   ########.fr       */
+/*   Updated: 2024/03/07 17:12:34 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include <so_long.h>
 
-t_coin *create_coins()
+void	set_info_c(t_coin *coin, int i, int x, int y)
 {
-	int x;
-	int y;
-	int i;
+	coin[i].pos_x = x;
+	coin[i].pos_y = y;
+	coin[i].is_collected = 0;
+}
 
-	t_coin *coin;
+t_coin	*create_coins(void)
+{
+	int		x;
+	int		y;
+	int		i;
+	t_coin	*coin;
 
 	coin = malloc(sizeof(t_coin) * engine()->map.c_count);
-	if(!coin)
-		return(NULL);
+	if (!coin)
+		return (NULL);
 	y = 0;
 	i = 0;
-	while(engine()->map.map_grid[y])
+	while (engine()->map.map_grid[y])
 	{
 		x = 0;
-		while(engine()->map.map_grid[y][x])
+		while (engine()->map.map_grid[y][x])
 		{
-			if(engine()->map.map_grid[y][x] == 'C')
+			if (engine()->map.map_grid[y][x] == 'C')
 			{
-				coin[i].pos_x = x;
-				coin[i].pos_y = y;
-				coin[i].is_collected = 0;
+				set_info_c(coin, i, x, y);
 				i++;
 			}
 			x++;
 		}
 		y++;
 	}
-	return(coin);
+	return (coin);
 }

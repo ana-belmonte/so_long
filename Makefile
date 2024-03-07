@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+         #
+#    By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/12 12:51:00 by aaires-b          #+#    #+#              #
-#    Updated: 2023/11/09 15:30:08 by aaires-b         ###   ########.fr        #
+#    Updated: 2024/03/07 17:00:44 by aaires-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,16 @@ NAME = so_long
 
 SRCSFILES = main.c exit_free.c init.c map.c checkers.c get_next_line.c \
 			get_next_line_utils.c data_carct.c events_hooks.c \
-			set_images.c rendering.c coins.c collision.c endgame.c enemies.c
+			set_images.c rendering.c coins.c collision.c endgame.c enemies.c \
+			checkers2.c exit_free2.c main2.c rendering2.c set_images2.c set_images3.c
+
 ##PARSFILES = checkers.c
 
 SRCSDIR	= srcs
 ##PARSDIR = parsing
 OBJDIR	= obj
 CC = cc 
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 LIBFT = libft/libft.a
 LIBFTDIR = libft
 LIBFTFLAGS = -L ./libft/ -lft
