@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:08:51 by aaires-b          #+#    #+#             */
-/*   Updated: 2024/03/07 15:30:54 by aaires-b         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:14:24 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void	update_player_pos(void)
 		&& !check_wall_collision(new_x, new_y + 0.50) 
 		&& !check_wall_collision(new_x + 0.40, new_y))
 	{
-		if ((int)new_y != (int)engine()->map.player.pos_y 
-			|| (int)new_x != (int)engine()->map.player.pos_x)
-			engine()->n_moves += 1;
+		if (new_x != engine()->map.player.pos_x 
+			|| engine()->map.player.pos_y != new_y)
+			set_moves();
 		engine()->map.player.pos_x = new_x;
 		engine()->map.player.pos_y = new_y;
 	}
@@ -104,10 +104,10 @@ int	update(void)
 	collect_coin();
 	endgame();
 	(engine()->itoa) = ft_itoa(engine()->n_moves);
-	(engine()->moves) = ft_strjoin("MOVES:", engine()->itoa);
+	(engine()->moves) = ft_strjoin("MOVES: ", engine()->itoa);
 	free(engine()->itoa);
 	mlx_string_put(engine()->mlx_cnt, engine()->mlx_win, 
-		(engine()->map.w - 0.9) * 64, 
+		(engine()->map.w - 1.3) * 64, 
 		(engine()->map.h + 0.5 - engine()->map.h) * 64, 
 		(int)0x00ffffff, engine()->moves);
 	free(engine()->moves);

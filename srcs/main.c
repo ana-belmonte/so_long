@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:27:45 by aaires-b          #+#    #+#             */
-/*   Updated: 2024/03/07 16:58:52 by aaires-b         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:10:01 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ t_game	*engine(void)
 	static t_game	game;
 
 	return (&game);
+}
+
+void	set_moves(void)
+{
+	if (engine()->key_pressed)
+	{
+		engine()->n_moves += 1;
+		engine()->key_pressed = 0;
+	}
 }
 
 void	init_window(int w, int h)

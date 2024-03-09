@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:38:57 by aaires-b          #+#    #+#             */
-/*   Updated: 2024/03/07 17:43:11 by aaires-b         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:16:32 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,8 @@ typedef struct s_game
 	float		velocidade;
 	char		*moves;
 	char		*itoa;
+	int			key_pressed;
 }	t_game;
-
-// MAP RELATED
 
 void		readfile(char *filename);
 char		*get_next_line(int fd);
@@ -128,23 +127,15 @@ void		render_exit(void);
 void		endgame(void);
 void		enemie_collision(void);
 int			help_checker(char **map, int x, int y);
-
-// ERROR HANDLING
-
+void		set_moves(void);
 int			exit_free(char *error);
 int			checker_arg(char *arg);
 int			checker_map(char *filename);
 int			data_caract(char **newmap);
 void		free_cpy(char **newmap);
-
-// MAIN STRUCT
-
 t_game		*engine(void);
 void		init_variables(t_game *game);
 void		init_image(t_image *image);
-
-// EVENT HANDLING
-
 int			close_window(t_game *game);
 int			move_handle(int keysym);
 int			update(void);
@@ -155,8 +146,6 @@ int			get_pixel_color(t_image *old, int x, int y);
 void		cpy_pixel(t_image *base, int x, int y, unsigned int color);
 int			reset_handle(int keysym);
 void		render_coin(void);
-// MOVES
-
 t_enemie	*create_enemies(void);
 void		set_sprite_enemies(void);
 void		render_player(void);
