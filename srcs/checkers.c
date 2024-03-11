@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 19:40:33 by aaires-b          #+#    #+#             */
-/*   Updated: 2024/03/06 18:59:16 by aaires-b         ###   ########.fr       */
+/*   Updated: 2024/03/10 13:42:06 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	checker_arg(char *arg)
 		if (arg[i + 1] == '.')
 		{
 			flag = 1;
-			if (arg[i + 2] != 'b' || arg[i + 3] != 'e' || arg[i + 4] != 'r')
+			if (arg[i + 2] != 'b' || arg[i + 3] != 'e' || arg[i + 4] != 'r' 
+				|| arg[i + 5] != '\0') // fazer strcmp
 				return (1);
 		}
 		i++;

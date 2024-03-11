@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:27:45 by aaires-b          #+#    #+#             */
-/*   Updated: 2024/03/09 15:10:01 by aaires-b         ###   ########.fr       */
+/*   Updated: 2024/03/10 13:11:23 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	init_window(int w, int h)
 	engine()->mlx_cnt = mlx_init();
 	if (!engine()->mlx_cnt)
 		exit(exit_free("fail connecting to interface\n"));
-	name = "cacosidade";
+	name = "so_long";
 	mlx_cnt = engine()->mlx_cnt;
 	(engine()->mlx_win) = mlx_new_window(mlx_cnt, w * 64, h * 64, name);
 	if (!engine()->mlx_win)
