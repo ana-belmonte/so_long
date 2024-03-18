@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aaires-b <aaires-b@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: aaires-b <aaires-b@@student.42.fr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/12 12:51:00 by aaires-b          #+#    #+#              #
-#    Updated: 2024/03/07 17:00:44 by aaires-b         ###   ########.fr        #
+#    Updated: 2024/03/18 14:15:06 by aaires-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,19 +41,30 @@ SRCS	= $(addprefix $(SRCSDIR)/, $(SRCSFILES))
 
 OBJS	= $(patsubst $(SRCSDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 
+RESET=\033[0m
+BOLD=\033[1m
+RED=\033[31m
+GREEN=\033[32m
+YELLOW=\033[33m
+BLUE=\033[34m
+MAGENTA=\033[35m
+CYAN=\033[36m
+
 all : $(NAME)
 
 ## $(NAME): $(OBJ)
 ## $(CC) $(OBJS) $(LIBFTFLAGS) $(MLXFLAGS) $(CFLAGS) -o $(NAME)
 
+$(OBJDIR)/%.o: $(SRCSDIR)/%.c | $(OBJDIR)
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
 $(NAME): $(MLX) $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(LIBFTFLAGS) $(MLXFLAGS) $(CFLAGS) -o $(NAME)
+	@echo "(GREEN)Compiling so_long$(RESET)"
+	@$(CC) $(OBJS) $(LIBFTFLAGS) $(MLXFLAGS) $(CFLAGS) -o $(NAME)
+	@echo "$(YELLOW)Done$(RESET)"
 
 ## $(OBJDIR)/%.o: $(SRCSDIR)/%.c | $(OBJDIR)
 ## $(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
-
-$(OBJDIR)/%.o: $(SRCSDIR)/%.c | $(OBJDIR)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(MLX): 
 	@make -C $(MLXDIR)
@@ -62,13 +73,17 @@ $(LIBFT):
 	@make -C $(LIBFTDIR)
 
 $(OBJDIR):
-	mkdir -p $(OBJDIR)
+	@mkdir -p $(OBJDIR)
 
 clean : 
-	rm -rf $(OBJDIR)
+	@echo "$(CYAN)Cleaning object files(RESET)"
+	@rm -rf $(OBJDIR)
+	@echo "$(YELLOW)Done$(RESET)"
 
 fclean: clean
-	rm -f $(NAME)
+	@echo "$(CYAN)Cleaning so_long executable$(RESET)"
+	@rm -f $(NAME)
+	@echo "$(YELLOW)Done$(RESET)"
 
 re : fclean all
 
